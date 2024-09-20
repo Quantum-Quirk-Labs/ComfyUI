@@ -860,16 +860,20 @@ def validate_prompt(prompt: typing.Mapping[str, typing.Any]) -> ValidationTuple:
             span.set_attributes({
                 f"error.{k}": v for k, v in res.error.items() if isinstance(v, (bool, str, bytes, int, float, list))
             })
+            logging.warning(({f"error.{k}": v for k, v in res.error.items() if isinstance(v, (bool, str, bytes, int, float, list))}))
             if "extra_info" in res.error and isinstance(res.error["extra_info"], dict):
                 extra_info: ValidationErrorExtraInfoDict = res.error["extra_info"]
                 span.set_attributes({
                     f"error.extra_info.{k}": v for k, v in extra_info.items() if isinstance(v, (str, list))
                 })
+
+                logging.warning({f"error.extra_info.{k}": v for k, v in extra_info.items() if isinstance(v, (str, list))})
         if len(res.node_errors) > 0:
             for node_id, node_error in res.node_errors.items():
                 for node_error_field, node_error_value in node_error.items():
                     if isinstance(node_error_value, (str, bool, int, float)):
                         span.set_attribute(f"node_errors.{node_id}.{node_error_field}", node_error_value)
+                        logging.warning(f"node_errors.{node_id}.{node_error_field}", node_error_value)
     return res
 
 
