@@ -10,7 +10,9 @@ _base_path = None
 def get_base_path() -> str:
     global _base_path
     if _base_path is None:
-        if args.cwd is not None:
+        if os.getenv('LATENTX_BASE_PATH') is not None:
+            set_base_path(os.getenv('LATENTX_BASE_PATH'))
+        elif args.cwd is not None:
             if not os.path.exists(args.cwd):
                 try:
                     os.makedirs(args.cwd, exist_ok=True)
