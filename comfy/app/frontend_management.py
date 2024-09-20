@@ -113,7 +113,7 @@ def download_release_asset_zip(release: Release, destination_path: str) -> None:
 
 class FrontendManager:
     DEFAULT_FRONTEND_PATH = get_package_as_path('comfy', 'web/')
-    CUSTOM_FRONTENDS_ROOT = add_model_folder_path("web_custom_versions", extensions=set())
+    # CUSTOM_FRONTENDS_ROOT = add_model_folder_path("web_custom_versions", extensions=set())
 
     @classmethod
     def parse_version_string(cls, value: str) -> tuple[str, str, str]:
